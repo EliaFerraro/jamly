@@ -169,7 +169,7 @@ Deliberately minimal for v0.1: crash reporting, plus the handful of product metr
 
 | Level | Scope |
 |---|---|
-| Unit | Pure logic: setlist duration maths, date handling, transposition later |
+| Unit | Jest. Pure logic: setlist duration maths, date handling, transposition later |
 | Component | Critical screens with React Native Testing Library |
 | Integration | Repositories against a local Supabase, **including RLS policy tests** |
 | E2E | One Maestro smoke flow: sign in → band → song → setlist |

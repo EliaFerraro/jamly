@@ -15,7 +15,7 @@ The constraints that actually decide this:
 
 ## Decision
 
-Build Jamly with **Expo (SDK 56) and React Native, in TypeScript with `strict: true`**, using **Expo Router** for file-based routing.
+Build Jamly with **Expo (SDK 57) and React Native, in TypeScript with `strict: true`**, using **Expo Router** for file-based routing.
 
 Ship to iOS and Android from one codebase; keep the web build available as a hedge and a future admin/landing surface.
 

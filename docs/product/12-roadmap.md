@@ -33,11 +33,13 @@ The order is not arbitrary:
 - [x] Market and competitor research
 - [x] Business case, personas, positioning, business model, risks
 - [x] Feature inventory, MVP scope, domain model
-- [ ] Design principles + information architecture
-- [ ] Architecture, stack, data model, conventions, ADRs
-- [ ] Git repo, Expo app skeleton, theme, navigation, CI
+- [x] Design principles + information architecture
+- [x] Architecture, stack, data model, conventions, 7 ADRs
+- [x] Git repo, Expo app skeleton, stage-dark theme, five-tab navigation, CI
+- [x] v0.1 schema as a versioned migration with row-level security
+- [ ] First validation interviews ([14-validation-plan](14-validation-plan.md)) — start now, they can still change v0.1
 
-**Done when:** `npx expo start` opens the app on a real phone with the five main screens navigable, and every decision so far has a document behind it.
+**Done when:** `npx expo start` opens the app on a real phone with the five main screens navigable, and every decision so far has a document behind it. ✅ *reached 2026-09-01*
 
 ---
 

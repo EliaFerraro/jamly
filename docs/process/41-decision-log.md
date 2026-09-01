@@ -31,6 +31,16 @@
 | D19 | **Pre-committed decision rules written before the validation interviews** | So the results can't be rationalized after the fact. The plan is allowed to be wrong — but only if we let the data say so | [14-validation-plan](../product/14-validation-plan.md) |
 | D20 | **Name "Jamly" kept; trademark checks deferred but tracked** | No music-app collision found; one unrelated company on Crunchbase. Cheap to resolve pre-launch, expensive after | [04-positioning](../business/04-positioning.md), [R10](../business/06-risks-and-open-questions.md) |
 
+## 2026-09-01 — Scaffold built
+
+| # | Decision | Why | See |
+|---|---|---|---|
+| D21 | **Expo SDK 57**, not 56 | 57 is the current stable release (RN 0.86.3, React 19.2.3, TypeScript 6). Desk research had said 56; the toolchain corrected it. From SDK 57 Expo uses **unified versioning** — first-party packages carry the SDK major (`expo-router@57.x`), so versions must come from `npx expo install`, never hand-written | [31-stack](../tech/31-stack.md) |
+| D22 | **`babel-preset-expo` declared as an explicit devDependency** | Not resolvable transitively; the Jest transform fails without it | [31-stack](../tech/31-stack.md) |
+| D23 | **Zustand documented but not yet installed** | The stack doc's own rule: a dependency without a current use is a liability. It arrives with the first screen that needs UI state | [31-stack](../tech/31-stack.md) |
+| D24 | **`.gitignore` hardened to exclude `.env`** | The Expo template ignores only `.env*.local`, which would have let a real `.env` with Supabase keys be committed | — |
+| D25 | **`Placeholder` component is a developer marker, not an empty state** | Empty states are a user-facing design problem with their own rule (never assign the user homework). Conflating the two would have smuggled an anti-pattern into the design system | [20-design-principles](../design/20-design-principles.md) |
+
 ---
 
 ## Open decisions

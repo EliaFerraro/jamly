@@ -8,16 +8,16 @@
 
 | Choice | Version target | Why | ADR |
 |---|---|---|---|
-| **Expo** | SDK 56 | iOS + Android + web + future desktop from one codebase. Managed builds (EAS) remove native toolchain maintenance — significant for a solo dev. | [0001](adr/0001-cross-platform-expo-react-native.md) |
-| **React Native** | 0.85 | Comes with the SDK. New Architecture (Fabric/TurboModules) is mandatory from SDK 55 — no legacy bridge option exists. | [0001](adr/0001-cross-platform-expo-react-native.md) |
-| **React** | 19.2 | Comes with the SDK. | |
-| **TypeScript** | 5.x, `strict: true` | Types are the documentation that can't rot. Non-negotiable for a project returned to after gaps. | |
-| **Expo Router** | v6 | File-based routing, familiar from web. **Deep links come free — and the invite link is the single most important flow in the product** ([R2](../business/06-risks-and-open-questions.md)). | |
-| **Zustand** | 5.x | ~1KB, no boilerplate, no context gymnastics. UI state only. | |
-| **TanStack Query** | v5 | Server-state caching, revalidation, optimistic updates. The offline-first read pattern is largely its job. | |
-| **expo-sqlite** | SDK-matched | Local persistent cache. First-party, no extra native config. | [0003](adr/0003-offline-first-sync-strategy.md) |
-| **react-native-reanimated** | SDK-matched | Drag-to-reorder setlists and smooth performance-mode transitions. | |
-| **@shopify/flash-list** | v2 | A 200-song repertoire must scroll without jank ([N1](../product/11-mvp-scope.md)). | |
+| **Expo** | SDK 57 (`57.0.19`) | iOS + Android + web + future desktop from one codebase. Managed builds (EAS) remove native toolchain maintenance — significant for a solo dev. | [0001](adr/0001-cross-platform-expo-react-native.md) |
+| **React Native** | 0.86.3 | Comes with the SDK. New Architecture (Fabric/TurboModules) is mandatory from SDK 55 — no legacy bridge option exists. | [0001](adr/0001-cross-platform-expo-react-native.md) |
+| **React** | 19.2.3 | Comes with the SDK. | |
+| **TypeScript** | 6.x, `strict: true` | Types are the documentation that can't rot. Non-negotiable for a project returned to after gaps. | |
+| **Expo Router** | 57.x | File-based routing, familiar from web. **Deep links come free — and the invite link is the single most important flow in the product** ([R2](../business/06-risks-and-open-questions.md)). | |
+| **Zustand** | 5.x | ~1KB, no boilerplate, no context gymnastics. UI state only. *(Not yet installed — added with the first stateful screen.)* | |
+| **TanStack Query** | 5.x | Server-state caching, revalidation, optimistic updates. The offline-first read pattern is largely its job. | |
+| **expo-sqlite** | 57.x | Local persistent cache. First-party, no extra native config. | [0003](adr/0003-offline-first-sync-strategy.md) |
+| **react-native-reanimated** | 4.x | Drag-to-reorder setlists and smooth performance-mode transitions. | |
+| **@shopify/flash-list** | 2.3.x | A 200-song repertoire must scroll without jank ([N1](../product/11-mvp-scope.md)). | |
 | **react-native-pdf** *(or `expo-image` + a viewer)* | — | Chart display. **Evaluate during build** — PDF rendering is the least certain client dependency. | |
 | **date-fns** | 4.x | Date maths without Moment's weight. Timezone-aware — bands travel. | |
 | **expo-secure-store** | SDK-matched | Session token storage. | |
@@ -48,7 +48,8 @@
 |---|---|
 | **ESLint** + `eslint-config-expo` | Catches the boring mistakes |
 | **Prettier** | Formatting is not worth a decision |
-| **Jest** + React Native Testing Library | Standard for RN; component tests where they earn their keep |
+| **Jest** (`jest-expo` preset) + React Native Testing Library | Standard for RN; component tests where they earn their keep |
+| **babel-preset-expo** | Required explicitly as a devDependency for the Jest transform — it is not resolvable transitively |
 | **Maestro** | E2E on real device flows, simple YAML |
 | **GitHub Actions** | Typecheck + lint + test on every PR |
 | **EAS Build / EAS Update** | Cloud builds without local Xcode/Android SDK pain; OTA updates for JS-only fixes |
@@ -68,6 +69,9 @@
 
 ## Version policy
 
+- **Expo uses unified versioning from SDK 57**: first-party packages carry the SDK's major
+  version (`expo-router@57.x`, `expo-sqlite@57.x`), not independent version lines. Don't
+  hand-write these — `npx expo install` resolves them.
 - **Pin the Expo SDK.** Upgrade deliberately, one SDK at a time, never mid-milestone.
 - Let `expo install` choose versions for Expo-managed packages — it resolves SDK-compatible ones.
 - Renovate/Dependabot for security patches only. Chasing minor versions is not progress.

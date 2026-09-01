@@ -30,8 +30,13 @@ yarn-error.*
 .DS_Store
 *.pem
 
-# local env files
+# local env files — .env holds the Supabase keys and must never be committed
+.env
 .env*.local
+!.env.example
+
+# tests
+coverage/
 
 # typescript
 *.tsbuildinfo
