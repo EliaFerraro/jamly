@@ -41,6 +41,12 @@
 | D24 | **`.gitignore` hardened to exclude `.env`** | The Expo template ignores only `.env*.local`, which would have let a real `.env` with Supabase keys be committed | — |
 | D25 | **`Placeholder` component is a developer marker, not an empty state** | Empty states are a user-facing design problem with their own rule (never assign the user homework). Conflating the two would have smuggled an anti-pattern into the design system | [20-design-principles](../design/20-design-principles.md) |
 
+## 2026-09-02 — Development runtime
+
+| # | Decision | Why | See |
+|---|---|---|---|
+| D26 | **EAS development build is the dev runtime; Expo Go is not usable** | Expo Go on both stores is frozen at SDK 54 and Expo ships no SDK 57 build — it is now positioned as a learning tool. Downgrading the project to 54 to regain Expo Go was rejected: it would forfeit RN 0.86 / New Architecture and contradict the SDK 57 pin (D21). `expo-dev-client` added; `eas.json` defines `development` / `preview` / `production` profiles. Cloud builds keep the machine free of the Android toolchain, as [ADR-0001](../tech/adr/0001-cross-platform-expo-react-native.md) already assumed | [31-stack](../tech/31-stack.md) |
+
 ---
 
 ## Open decisions

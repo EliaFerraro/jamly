@@ -22,6 +22,7 @@
 | **date-fns** | 4.x | Date maths without Moment's weight. Timezone-aware — bands travel. | |
 | **expo-secure-store** | SDK-matched | Session token storage. | |
 | **expo-keep-awake** | SDK-matched | The screen must not sleep during a show. Small dependency, large consequence. | |
+| **expo-dev-client** | SDK-matched | **Required to run the app at all.** Expo Go is frozen at SDK 54 and no SDK 57 build exists, so the dev client *is* the development runtime — not an optional upgrade. | |
 
 **Deliberately not used:**
 - **A UI component library** (NativeBase, Tamagui, gluestack). The stage-readable dark theme is a differentiator ([Rule 3](../design/20-design-principles.md)); fighting a library's defaults costs more than a small in-house kit.
