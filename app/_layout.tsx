@@ -35,11 +35,7 @@ export default function RootLayout() {
             animation: 'fade',
           }}
         >
-          <Stack.Screen name="(tabs)" />
-          <Stack.Screen name="join/[code]" />
-          {/* Performance mode is a full-screen takeover, not a tab: on stage a
-              tab bar is wasted pixels and accidental taps. */}
-          <Stack.Screen name="performance/[id]" options={{ animation: 'fade' }} />
+          <Stack.Screen name="index" />
         </Stack>
       </SafeAreaProvider>
     </QueryClientProvider>

@@ -47,6 +47,19 @@
 |---|---|---|---|
 | D26 | **EAS development build is the dev runtime; Expo Go is not usable** | Expo Go on both stores is frozen at SDK 54 and Expo ships no SDK 57 build — it is now positioned as a learning tool. Downgrading the project to 54 to regain Expo Go was rejected: it would forfeit RN 0.86 / New Architecture and contradict the SDK 57 pin (D21). `expo-dev-client` added; `eas.json` defines `development` / `preview` / `production` profiles. Cloud builds keep the machine free of the Android toolchain, as [ADR-0001](../tech/adr/0001-cross-platform-expo-react-native.md) already assumed | [31-stack](../tech/31-stack.md) |
 
+## 2026-09-05 — Backend environment
+
+A local Supabase stack (Docker + WSL) was built, seeded and verified first, then
+deliberately abandoned the same day. Recorded because the reasoning matters more
+than the outcome, and because the reversal itself was the decision.
+
+| # | Decision | Why | See |
+|---|---|---|---|
+| D27 | **Supabase Cloud is the only backend. No local stack, no Docker, no WSL.** | The point of a backend right now is to be reachable *from a phone*. A local stack is reachable from the dev machine and then needs a LAN IP for a device, `10.0.2.2` for an Android emulator, and different values again for an EAS build handed to a bandmate. One hosted project removes that whole class of environment juggling, and removes ~7 GB of images and a 4 GB WSL VM from the machine. Accepted cost: no offline development, migrations run against a live database, and a free-tier project pauses after a week idle | `.env.example` |
+| D28 | **The schema starts empty.** `0001_init.sql` and `seed.sql` were deleted rather than pushed to the cloud project | Every table should be introduced deliberately, as the feature that needs it is built, rather than inherited wholesale from a document. The 463-line schema is not lost — it is in git at `88b39e7` and can be reintroduced a table at a time. Note the seed could never have run on a hosted project anyway: it writes directly to `auth.users`, which only the local stack permits | git `88b39e7` |
+| D29 | **The app is one screen: a connection check.** The tab skeleton, join route and performance route were removed | v0.0 has exactly one thing worth knowing — can the device reach the database. Screens for features that do not exist made that answer harder to see, not easier | `app/index.tsx` |
+| D30 | **The health probe selects from a table that deliberately does not exist, and classifies on HTTP status, never on the error code** | With no tables there is nothing legitimate to select, but a `PGRST205` still proves the gateway authenticated the key and PostgREST answered from a schema cache built by reading Postgres. Status is the only trustworthy signal: postgrest-js does not throw when a request never lands (status `0`), and a rejected key returns a **null** error code (status `401`) — so branching on the code blames the network for what is really a bad key. Both shapes are pinned by tests | `src/features/health/` |
+
 ---
 
 ## Open decisions

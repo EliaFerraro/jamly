@@ -52,8 +52,16 @@ src/
   lib/        supabase client, entitlements, utils
   theme/      design tokens — no literal hex or magic numbers in styles
   types/      domain types mirroring 13-domain-model.md
-supabase/migrations/   versioned SQL — the schema's source of truth
 ```
+
+**Backend:** Supabase Cloud only — no local stack, no Docker, no WSL (D27). The
+database currently has **no tables**; each arrives with the feature that needs
+it. When the first migration is needed, `supabase init` recreates `supabase/`,
+and the original full schema sits in git at `88b39e7` to crib from a table at a
+time.
+
+**Current state of the app:** one screen, `app/index.tsx`, reporting whether the
+device can reach the database. The tab skeleton was removed (D29).
 
 ## Commands
 
