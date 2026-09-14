@@ -119,7 +119,9 @@
 
 | # | Feature | Value | Effort | Conf. | MoSCoW | Rel. |
 |---|---|---|---|---|---|---|
-| F601 | Auth: email magic link | high | M | high | **Must** | v0.1 |
+| F601 | Auth: email + password sign-in | high | S | high | **Must** | v0.1 |
+| F606 | Auth: password reset | high | S | high | **Must** | v0.1 |
+| F607 | Auth: email OTP (six-digit code) | med | M | high | Should | v0.2 |
 | F602 | Offline read of all band data | high | L | high | **Must** | v0.1 |
 | F603 | Offline write with sync on reconnect | high | L | high | Should | v0.2 |
 | F604 | Dark stage-readable theme | high | S | high | **Must** | v0.1 |

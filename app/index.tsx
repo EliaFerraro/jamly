@@ -1,6 +1,7 @@
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 import { Button, Card, Screen, Text } from '@/components';
+import { useAuth, useMyProfile } from '@/features/auth';
 import { useBackendHealth } from '@/features/health';
 import type { BackendStatus } from '@/features/health';
 import { colors, spacing } from '@/theme';
@@ -8,41 +9,79 @@ import { colors, spacing } from '@/theme';
 /**
  * The whole app, for now.
  *
- * v0.0 has one job: prove the phone in your hand can reach the database. Every
- * feature is built on top of that answer, so it is worth being able to see it
- * plainly rather than inferring it from a screen that failed to load.
+ * v0.0 has two jobs: prove this device can reach the database, and prove the
+ * person holding it is who the database thinks they are. Every feature is
+ * built on top of those two answers, so it is worth being able to see them
+ * plainly rather than inferring them from a screen that failed to load.
  */
-export default function BackendStatusScreen() {
+export default function HomeScreen() {
+  const { state, signOut } = useAuth();
   const { data, isFetching, refetch } = useBackendHealth();
+  const profile = useMyProfile();
+
+  const email = state.status === 'signedIn' ? state.user.email : '';
 
   return (
-    <Screen>
-      <View style={styles.body}>
-        <Text variant="title">Jamly</Text>
-        <Text variant="caption" tone="muted" style={styles.subtitle}>
-          v0.0 — connection check
+    <Screen scroll>
+      <Text variant="title">Jamly</Text>
+      <Text variant="caption" tone="muted" style={styles.subtitle}>
+        v0.0 — signed in
+      </Text>
+
+      <Card style={styles.card}>
+        <Text variant="heading">{profile.data?.displayName ?? email}</Text>
+        <Text tone="secondary" style={styles.detail}>
+          {profile.data?.displayName ? email : 'No display name set yet.'}
         </Text>
 
-        <Card highlighted={data?.state === 'ok'} style={styles.card}>
-          {isFetching || !data ? (
-            <View style={styles.row}>
-              <ActivityIndicator color={colors.textSecondary} />
-              <Text tone="secondary" style={styles.rowText}>
-                Checking…
-              </Text>
-            </View>
-          ) : (
-            <Result status={data} />
-          )}
-        </Card>
+        {/* The profile row is the end-to-end proof: it can only arrive if the
+            session's token satisfied the row-level security policy. */}
+        {profile.isPending ? (
+          <Text variant="caption" tone="muted" style={styles.detail}>
+            Loading your profile…
+          </Text>
+        ) : profile.isError ? (
+          <Text variant="caption" tone="danger" style={styles.detail}>
+            Signed in, but your profile did not load — the profiles table
+            may not be migrated yet.
+          </Text>
+        ) : profile.data ? (
+          <Text variant="caption" tone="muted" style={styles.detail}>
+            Plan: {profile.data.plan.replace('_', ' ')}
+          </Text>
+        ) : (
+          <Text variant="caption" tone="warning" style={styles.detail}>
+            No profile row for this account.
+          </Text>
+        )}
+      </Card>
 
-        <Button
-          label={isFetching ? 'Checking…' : 'Check again'}
-          onPress={() => void refetch()}
-          disabled={isFetching}
-          style={styles.button}
-        />
-      </View>
+      <Card highlighted={data?.state === 'ok'} style={styles.card}>
+        {isFetching || !data ? (
+          <View style={styles.row}>
+            <ActivityIndicator color={colors.textSecondary} />
+            <Text tone="secondary" style={styles.rowText}>
+              Checking…
+            </Text>
+          </View>
+        ) : (
+          <Result status={data} />
+        )}
+      </Card>
+
+      <Button
+        label={isFetching ? 'Checking…' : 'Check again'}
+        onPress={() => void refetch()}
+        disabled={isFetching}
+        style={styles.button}
+      />
+
+      <Button
+        label="Sign out"
+        variant="secondary"
+        onPress={() => void signOut()}
+        style={styles.button}
+      />
     </Screen>
   );
 }
@@ -113,10 +152,6 @@ function Dot({ color }: { color: string }) {
 }
 
 const styles = StyleSheet.create({
-  body: {
-    flex: 1,
-    justifyContent: 'center',
-  },
   subtitle: {
     marginTop: spacing.xs,
   },

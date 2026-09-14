@@ -1,5 +1,7 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 
+import { createSessionStorage } from './secureStorage';
+
 /**
  * The Supabase client.
  *
@@ -24,6 +26,13 @@ const anonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY;
  */
 export const isBackendConfigured = Boolean(url && anonKey);
 
+/**
+ * Named rather than left to the default `sb-<project-ref>-auth-token`, so that
+ * rotating the Supabase project does not strand a live session under a key
+ * nothing will ever read again.
+ */
+const SESSION_STORAGE_KEY = 'jamly-auth-session';
+
 let client: SupabaseClient | null = null;
 
 export function getSupabase(): SupabaseClient {
@@ -35,9 +44,17 @@ export function getSupabase(): SupabaseClient {
   }
   client ??= createClient(url as string, anonKey as string, {
     auth: {
-      // Magic-link only (ADR-0002). No password flows to build or support.
+      // Email + password for now, email OTP later (ADR-0008). Both are the
+      // same session once issued, which is why nothing here is method-specific.
+      storage: createSessionStorage(),
+      storageKey: SESSION_STORAGE_KEY,
       persistSession: true,
+      // The refresh timer is additionally gated on app foreground by the auth
+      // feature: a token refreshed while the phone is in a gig bag is a
+      // pointless wake-up and a pointless network call.
       autoRefreshToken: true,
+      // There is no URL to read a session out of on a phone. Leaving this on
+      // would have the client inspect deep links it has no business parsing.
       detectSessionInUrl: false,
     },
   });

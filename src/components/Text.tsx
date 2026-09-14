@@ -3,7 +3,7 @@ import { Text as RNText, type TextProps as RNTextProps } from 'react-native';
 import { colors, typography } from '@/theme';
 
 type Variant = keyof typeof typography;
-type Tone = 'primary' | 'secondary' | 'muted' | 'accent' | 'danger';
+type Tone = 'primary' | 'secondary' | 'muted' | 'accent' | 'warning' | 'danger';
 
 type TextProps = RNTextProps & {
   variant?: Variant;
@@ -15,6 +15,7 @@ const tones: Record<Tone, string> = {
   secondary: colors.textSecondary,
   muted: colors.textMuted,
   accent: colors.accent,
+  warning: colors.warning,
   danger: colors.danger,
 };
 

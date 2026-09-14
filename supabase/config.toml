@@ -1,0 +1,45 @@
+# Supabase CLI configuration for the linked cloud project.
+#
+# Pulled from the live project with `npx supabase config pull`, so this file is
+# an accurate record of it rather than a set of local-stack defaults — Jamly has
+# no local stack (D27). Change auth settings HERE and push them, the same way
+# the schema is changed in a migration and never in the dashboard:
+#
+#   npx supabase config diff     # read-only: what would change
+#   npx supabase config push
+#
+# One setting still lives only in the dashboard, because the CLI cannot express
+# it: Authentication -> Policies -> leaked password protection (checks Have I
+# Been Pwned). It should be ON.
+
+project_id = "jamly"
+
+[auth]
+# Accounts are created deliberately while Jamly is invite-only (ADR-0008).
+# With this on, anyone holding the publishable key — which ships inside every
+# build of the app — could create themselves an account.
+enable_signup = false
+# Enforced by the server, never by a rule on the sign-in field (ADR-0008).
+minimum_password_length = 10
+additional_redirect_urls = []
+site_url = "http://localhost:3000"
+
+[auth.email]
+enable_confirmations = true
+max_frequency = "1m0s"
+otp_length = 8
+
+[auth.mfa.totp]
+enroll_enabled = true
+verify_enabled = true
+
+[db.pooler]
+default_pool_size = 15
+max_client_conn = 200
+
+[storage.analytics]
+enabled = true
+max_namespaces = 10
+
+[storage.image_transformation]
+enabled = true

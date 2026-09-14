@@ -63,7 +63,7 @@ Code is organized by **feature**, not by type — `features/setlist/` holds its 
 
 ```
 src/features/
-├── auth/          sign-in, magic link
+├── auth/          sign-in, session, route guards
 ├── band/          create, join, members, band home
 ├── repertoire/    songs, charts
 ├── events/        rehearsals and gigs, availability
@@ -121,8 +121,12 @@ This is enforced **in the database**, so a bug in the client cannot leak another
 ### Storage: private buckets only
 Charts and audio live in a private bucket, path-namespaced by band (`band/{band_id}/…`), reachable only through short-lived signed URLs issued to members. **No public URLs, ever.** This is a legal requirement, not a preference ([ADR-0007](adr/0007-copyright-user-generated-charts-only.md)).
 
-### Auth: magic link only
-No passwords in v0.1 — no password reset flow, no credential storage, no "forgot password" support burden, and one less field on the fastest path to value ([Rule 2](../design/20-design-principles.md)). Social login is v0.2.
+### Auth: email + password for now, email OTP next
+Email and password ([ADR-0008](adr/0008-email-password-auth-now-otp-later.md)). Passwordless was the plan and remains the target, but both passwordless methods need a transactional email provider before anyone can sign in even once, and authentication blocks every other story in v0.1.
+
+Sign-up is **disabled**: accounts are created deliberately in the dashboard while Jamly is invite-only. Sessions live in the OS keystore (`expo-secure-store`), chunked past its 2048-byte Android limit; password strength is enforced server-side, never as a client rule; a wrong password and an unknown account are answered identically. A reset flow is owed (`F606`).
+
+Email OTP — a six-digit code, no deep link — arrives with the email provider and signs in the same `auth.users` row. Social login is v0.2.
 
 ---
 

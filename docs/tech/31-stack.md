@@ -36,7 +36,7 @@
 |---|---|---|
 | **Supabase** | Postgres + Auth + Realtime + Storage + RLS in one managed platform. The realtime and row-level-security pieces are exactly what Jamly needs, and are the two hardest things to build alone. | [0002](adr/0002-backend-supabase-postgres.md) |
 | **PostgreSQL** | Real SQL. Genuine fullstack learning value, and relational data is the right shape for bands↔songs↔setlists. | [0002](adr/0002-backend-supabase-postgres.md) |
-| **Supabase Auth** | Magic link. No password flows to build or support. | |
+| **Supabase Auth** | Email + password today, email OTP once a transactional email provider exists. Sessions in the OS keystore. | [0008](adr/0008-email-password-auth-now-otp-later.md) |
 | **Supabase Realtime** | Broadcast channels for live setlist sync — the ephemeral-by-design transport this feature needs. | [0004](adr/0004-realtime-setlist-sync-transport.md) |
 | **Supabase Storage** | Private buckets for charts. Legally mandatory that these are private. | [0007](adr/0007-copyright-user-generated-charts-only.md) |
 | **Supabase CLI** | Local development and versioned migrations. **Schema is never edited in the dashboard.** | |

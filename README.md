@@ -43,13 +43,34 @@ npm run lint
 npm test
 ```
 
-### Backend (optional at this stage)
+### Backend
 
-The app needs a [Supabase](https://supabase.com) project only for network-backed
-features. To set one up: create a project, run `supabase/migrations/0001_init.sql`
-against it, and put the project URL and **anon** key into `.env`.
+The app runs without a backend — it reports "not configured" and stops there — but
+signing in needs one. To set it up: create a [Supabase](https://supabase.com) project,
+put its URL and **publishable** key into `.env`, then apply the migrations:
 
-The service-role key must never appear in this app.
+```bash
+npx supabase login
+npx supabase link --project-ref <your-project-ref>
+npx supabase db push
+```
+
+Auth settings are configuration too, not dashboard clicks:
+
+```bash
+npx supabase config diff      # read-only — what a push would change
+npx supabase config push
+```
+
+There is no self-serve sign-up ([ADR-0008](docs/tech/adr/0008-email-password-auth-now-otp-later.md)) —
+`enable_signup = false` in `supabase/config.toml` is what closes it. Create accounts in the
+dashboard under **Authentication → Users → Add user**, with *Auto Confirm User* ticked;
+a profile row appears for each one automatically.
+
+After any migration, run `npx supabase db advisors` — it catches exposure mistakes that
+neither the typechecker nor the tests can see.
+
+The secret key must never appear in this app, in any environment.
 
 ## Documentation
 

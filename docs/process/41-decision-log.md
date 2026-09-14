@@ -62,6 +62,24 @@ than the outcome, and because the reversal itself was the decision.
 
 ---
 
+## 2026-09-09 — Sign-in
+
+| # | Decision | Why | See |
+|---|---|---|---|
+| D31 | **Email + password is the way in, and sign-up is disabled** | Both passwordless methods need a transactional email provider before anyone can sign in once, and auth blocks every other v0.1 story. Email OTP stays the target and reuses everything built here | [ADR-0008](../tech/adr/0008-email-password-auth-now-otp-later.md) |
+| D32 | **The session lives in the OS keystore, split across numbered entries** | A refresh token is a bearer credential and belongs in the Keychain / EncryptedSharedPreferences, never in AsyncStorage. But SecureStore documents a 2048-byte ceiling on Android and a Supabase session is routinely larger, so the value is chunked behind a small index. The index carries the expected length, which is what makes a torn write detectable rather than silently corrupt | `src/lib/secureStorage.ts` |
+| D33 | **Percent-encode before chunking** | Chunking by character length is only chunking by byte length if every character is one byte. A display name in Japanese would put ~5400 bytes into an "1800-character" chunk and hit the limit the chunking exists to avoid | `src/lib/secureStorage.ts` |
+| D34 | **Route guards, not redirects.** `Stack.Protected` decides which half of the app exists; no screen navigates on auth state | A screen that pushes a route after signing in is a second source of truth for "am I signed in", and the two disagree the first time a token expires. Expo Router removes a guarded route from the navigator entirely, so there is no signed-out state in which the app's screens are merely hidden | `app/_layout.tsx` |
+| D35 | **The query cache is cleared on sign-out** | Every cached row was fetched under the previous identity. On a tablet shared between bandmates, keeping it shows one musician's data to the next one to sign in | `src/features/auth/AuthProvider.tsx` |
+| D36 | **A wrong password and an unknown account get the identical answer** | Distinguishing them turns the sign-in screen into a way to enumerate who has a Jamly account, and helps nobody: the musician who typo'd their address is not served by either message | `src/features/auth/api/authErrors.ts` |
+| D37 | **No password-strength rule on the sign-in field.** Strength is enforced server-side, in the dashboard | A minimum length checked at sign-in locks out whoever chose their password before the rule existed, and publishes the shape of every password in the system. Strength belongs where a password is chosen | [ADR-0008](../tech/adr/0008-email-password-auth-now-otp-later.md) |
+| D38 | **`profiles` is the first table, and `plan` is not writable by the client** | The row-level-security policy decides which *row* a musician may edit; a column-level grant decides which *columns*. Without it, a client with a perfectly valid session could set its own `plan` to `pro` — a distinction that stops being academic the moment money is involved | `supabase/migrations/20260909220000_profiles.sql` |
+| D39 | **The token refresh timer runs only in the foreground** | Left running, it wakes the app to renew a token nobody is using. A phone in a gig bag through a four-hour load-in should be asleep | `src/features/auth/AuthProvider.tsx` |
+| D40 | **Trigger functions live in a `private` schema, never in `public`** | Everything in `public` is a PostgREST endpoint, so a `security definer` trigger function there is callable as `/rest/v1/rpc/…` by anyone holding the publishable key. Caught by `supabase db advisors`, which is now worth running after every migration. Moving them out is more durable than revoking `execute` grant by grant — a schema nobody is exposed to cannot be forgotten | `supabase/migrations/20260909223000_…sql` |
+| D41 | **Auth configuration is `config.toml` + `config push`, not dashboard clicks** | Same reasoning as migrations: an untracked dashboard change is drift nobody can reconstruct. `config pull` was run first so the file is a true record of the project, and `config diff` shows exactly what a push would change. Two settings are declared so far — signups off, minimum password length 10 | `supabase/config.toml` |
+
+---
+
 ## Open decisions
 
 Deliberately not yet decided. Recorded so they aren't forgotten — and so nobody assumes they were settled.

@@ -37,13 +37,14 @@ Each story traces to a persona job in [03-personas-and-jtbd](../business/03-pers
 
 > This epic decides whether the product succeeds. See [R2](../business/06-risks-and-open-questions.md). If onboarding is mediocre, nothing downstream matters.
 
-**A1 — Sign in without ceremony** · `F601` · P1, P2
-> As a musician, I want to get into the app with just my email, so that I'm not filling in a registration form before I've seen anything.
+**A1 — Sign in without ceremony** · `F601`, `F606` · P1, P2
+> As a musician, I want to get into the app without filling in a registration form before I've seen anything.
 
-- Enter email → receive a magic link → tap → in.
-- No password. No username. No profile setup wizard.
+- Email + password ([ADR-0008](../tech/adr/0008-email-password-auth-now-otp-later.md)). No username, no profile setup wizard, no self-serve sign-up while Jamly is invite-only.
 - Display name is asked for **once**, inline, and can be skipped.
-- **AC:** from opening the app to being signed in: ≤ 3 taps and one email round-trip.
+- Autofill works, so the second sign-in on a device is one tap.
+- **AC:** from opening the app to being signed in: two fields and one button, and a returning musician is never asked again.
+- **Passwordless (`F607`) supersedes this** once a transactional email provider exists: email → six-digit code → in.
 
 **A2 — Create a band** · `F201` · P1
 > As a band leader, I want to create my band and get an invite link immediately, so I can paste it in our group chat right now.

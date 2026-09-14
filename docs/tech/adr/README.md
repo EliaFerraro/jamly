@@ -15,6 +15,7 @@ The value isn't the decision — it's the reasoning. In six months, "why didn't 
 | [0005](0005-monetization-free-now-pro-later.md) | Free now, individual Pro later | Accepted | 2026-09-01 |
 | [0006](0006-beachhead-gigging-band.md) | Beachhead: the gigging band | Accepted | 2026-09-01 |
 | [0007](0007-copyright-user-generated-charts-only.md) | User-generated, band-private content only | Accepted | 2026-09-01 |
+| [0008](0008-email-password-auth-now-otp-later.md) | Email + password now, email OTP later | Accepted | 2026-09-09 |
 
 ## When to write one
 

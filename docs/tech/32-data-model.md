@@ -36,6 +36,16 @@ create table profiles (
 ```
 `plan` and `plan_grandfathered_at` exist in v0.1 despite everything being free — they make the Phase 2 switch a configuration change and make the [migration rule](../business/05-business-model.md) technically enforceable.
 
+A row appears with its auth user and disappears with it, both by trigger on `auth.users` — so there is no insert or delete policy, and the app never deals with a signed-in user who has no profile. Reads and updates are the owner's own row only, and `plan` is withheld at the **column** level:
+
+```sql
+revoke all on table profiles from anon, authenticated;
+grant select on table profiles to authenticated;
+grant update (display_name, avatar_url) on table profiles to authenticated;
+```
+
+The policy decides which *row* may be written; the grant decides which *columns*. Without the second, a client holding a valid session could promote itself to `pro`.
+
 ### `bands`
 ```sql
 create table bands (
@@ -294,7 +304,10 @@ Minimum set, run against a local Supabase in CI:
 
 | File | Contents |
 |---|---|
-| `0001_init.sql` | Enums, tables, indexes, RLS policies, helper functions, `updated_at` triggers |
+| `20260909220000_profiles.sql` | `user_plan` enum, `profiles`, its policies and grants, the `auth.users` triggers, `set_updated_at()` |
+| `20260909223000_move_trigger_functions_out_of_public.sql` | Moves the three trigger functions into a `private` schema, out of the PostgREST-exposed API |
+
+Tables arrive with the feature that needs them (D28), so this table is the schema until the next feature is built. The full v0.1 schema this document describes exists in git at `88b39e7` and is reintroduced a table at a time.
 
 Rules: forward-only, never edited after being applied to production, applied to staging first, never a manual dashboard change ([30-architecture](30-architecture.md)).
 

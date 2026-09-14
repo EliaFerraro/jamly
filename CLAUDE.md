@@ -54,14 +54,17 @@ src/
   types/      domain types mirroring 13-domain-model.md
 ```
 
-**Backend:** Supabase Cloud only — no local stack, no Docker, no WSL (D27). The
-database currently has **no tables**; each arrives with the feature that needs
-it. When the first migration is needed, `supabase init` recreates `supabase/`,
-and the original full schema sits in git at `88b39e7` to crib from a table at a
-time.
+**Backend:** Supabase Cloud only — no local stack, no Docker, no WSL (D27). Tables
+arrive with the feature that needs them (D28); the original full schema sits in
+git at `88b39e7` to crib from a table at a time. So far: **`profiles`** only, in
+`supabase/migrations/`. Apply with `npx supabase link --project-ref <ref>` then
+`npx supabase db push` — never by editing the schema in the dashboard.
 
-**Current state of the app:** one screen, `app/index.tsx`, reporting whether the
-device can reach the database. The tab skeleton was removed (D29).
+**Current state of the app:** two screens behind an auth gate. `app/(auth)/sign-in.tsx`
+is all an unauthenticated device can reach; `app/index.tsx` shows who you are and
+whether the device can reach the database. Sign-in is email + password with sign-up
+disabled — accounts are created by hand in the dashboard (ADR-0008). The tab
+skeleton was removed (D29).
 
 ## Commands
 

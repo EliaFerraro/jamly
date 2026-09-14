@@ -38,8 +38,8 @@ Five tabs. Not four, not seven — these are the five nouns a band actually has.
 | Screen | Purpose | Notes |
 |---|---|---|
 | `Welcome` | First open, unauthenticated | One line of what Jamly is, one button |
-| `SignIn` | Email → magic link | No password field, ever |
-| `CheckEmail` | Waiting for the link | Resend option |
+| `SignIn` | Email + password | Two fields, one button, no sign-up link — accounts are created by hand ([ADR-0008](../tech/adr/0008-email-password-auth-now-otp-later.md)) |
+| `CheckEmail` | Waiting for the code | Arrives with email OTP, not before |
 | `JoinBand` | Landing from an invite link ⭐ | The most important screen in the product. Band name + who invited you + one button |
 | `CreateBand` | Start a band | **Name only.** Ends by presenting the invite link immediately |
 | `InviteMembers` | Share the link | Reachable from Band tab at all times, never buried |

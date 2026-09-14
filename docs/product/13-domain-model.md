@@ -66,7 +66,7 @@ A person. Exists independently of any band — Jamly follows the musician, not t
 | Field | Type | Notes |
 |---|---|---|
 | `id` | uuid | |
-| `email` | string | Auth identity. Magic link only, no password |
+| `email` | string | Auth identity. Password today, email OTP later ([ADR-0008](../tech/adr/0008-email-password-auth-now-otp-later.md)) |
 | `display_name` | string? | Optional, asked once inline |
 | `avatar_url` | string? | |
 | `plan` | enum | `free_unlimited` in Phase 1. Exists now so Phase 2 is config, not refactor |
