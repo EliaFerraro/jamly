@@ -7,8 +7,8 @@ import {
   type TextInputProps,
 } from 'react-native';
 
-import { Text } from '@/components';
 import { colors, radius, spacing, touchTarget, typography } from '@/theme';
+import { Text } from './Text';
 
 type FieldProps = TextInputProps & {
   label: string;
@@ -22,8 +22,9 @@ type FieldProps = TextInputProps & {
 /**
  * A labelled text input.
  *
- * Feature-local on purpose: it moves to the shared kit when a second feature
- * needs it, not in anticipation (docs/tech/33-conventions.md).
+ * Started out feature-local to auth and moved here when band became the second
+ * feature to need it — which is the rule, rather than moving things in
+ * anticipation (docs/tech/33-conventions.md).
  */
 export function Field({ label, error, secret = false, inputRef, style, ...rest }: FieldProps) {
   const [revealed, setRevealed] = useState(false);

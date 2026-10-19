@@ -70,6 +70,9 @@ function RootNavigator() {
     >
       <Stack.Protected guard={isSignedIn}>
         <Stack.Screen name="index" />
+        <Stack.Screen name="band/create" />
+        <Stack.Screen name="band/invite" />
+        <Stack.Screen name="join/[code]" />
       </Stack.Protected>
 
       <Stack.Protected guard={!isSignedIn}>

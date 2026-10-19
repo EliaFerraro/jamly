@@ -40,6 +40,12 @@ export type Band = {
   /** The only field required for a band to exist. Everything else is friction. */
   name: string;
   inviteCode: string;
+  /**
+   * A link in a group chat is a bearer credential. Expiry is what stops a
+   * forwarded screenshot from still working months later; a leader can rotate
+   * the code at any time as well.
+   */
+  inviteExpiresAt: Timestamp;
   createdBy: Uuid;
   createdAt: Timestamp;
 };

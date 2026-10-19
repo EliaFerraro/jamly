@@ -1,11 +1,10 @@
 import { useRef, useState } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 
-import { Button, Text } from '@/components';
+import { Button, Field, Text } from '@/components';
 import { spacing } from '@/theme';
 import { formatWait } from '../attempts';
 import { useSignIn } from '../hooks/useSignIn';
-import { Field } from './Field';
 
 /**
  * Email and password, and nothing else.

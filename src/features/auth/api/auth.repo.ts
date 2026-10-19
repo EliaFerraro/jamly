@@ -67,9 +67,16 @@ export async function signOut(): Promise<void> {
  */
 export async function getStoredUser(): Promise<AuthUser | null> {
   if (!isBackendConfigured) return null;
-  const { data, error } = await getSupabase().auth.getSession();
-  if (error || !data.session) return null;
-  return toAuthUser(data.session.user);
+  try {
+    const { data, error } = await getSupabase().auth.getSession();
+    if (error || !data.session) return null;
+    return toAuthUser(data.session.user);
+  } catch {
+    // A rejected read (an unreadable keystore, a refresh that throws rather
+    // than returning) must still resolve the boot spinner, or the app hangs on
+    // it forever. Signed out is the one state the musician can act on.
+    return null;
+  }
 }
 
 /**
