@@ -1,0 +1,62 @@
+name: Feature / story
+description: A piece of v0.1 a band can use. Written so an agent can build it without asking.
+labels: [feature]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        If it isn't in `docs/product/11-mvp-scope.md`, it doesn't go here: add it to
+        `docs/product/10-feature-inventory.md` instead.
+  - type: input
+    id: story
+    attributes:
+      label: Story and feature IDs
+      description: From 11-mvp-scope and 10-feature-inventory.
+      placeholder: 'A3 · F203'
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Who it's for and why
+      description: Which musician, in which moment. Remember the passive band member.
+      placeholder: "The drummer opens the app at load-in and needs to see tonight's setlist without tapping."
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Observable behaviour, one per line. This is what "done" is checked against.
+      placeholder: |
+        - Given … when … then …
+        - …
+    validations:
+      required: true
+  - type: textarea
+    id: out-of-scope
+    attributes:
+      label: Out of scope
+      description: What this issue must NOT do, even if it looks small.
+    validations:
+      required: true
+  - type: textarea
+    id: tests
+    attributes:
+      label: Test cases
+      description: The cases that must have a test, including edge cases and failure paths.
+  - type: textarea
+    id: decisions
+    attributes:
+      label: Decisions already taken
+      description: Product or technical choices settled for this issue, so the agent doesn't guess. Link ADRs or decision-log rows.
+  - type: textarea
+    id: data
+    attributes:
+      label: Data changes
+      description: New tables or columns, with RLS in mind. The agent writes the migration; Elia applies it.
+  - type: textarea
+    id: device-check
+    attributes:
+      label: What Elia checks on a real device
+      description: iOS + Android, offline read, dark legibility — the parts a cloud session can't verify.
