@@ -1,6 +1,6 @@
 name: Feature / story
 description: A piece of v0.1 a band can use. Written so an agent can build it without asking.
-labels: [feature]
+labels: [type:feature]
 body:
   - type: markdown
     attributes:

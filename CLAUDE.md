@@ -86,6 +86,10 @@ an issue.
   `feat/12-setlist-order`, cut from `dev`. Open the PR against `dev`; never merge it,
   and never push to `dev`, `staging` or `main` (they flow dev → staging → main, and
   promoting between them is Elia's).
+- **Labels are the handshake** ([42-project-board](docs/process/42-project-board.md)).
+  Start only on issues labelled `agent:ready`; add `agent:working` when you start. If
+  you stop for any reason other than done, add `needs:elia` and comment why. When the
+  PR is green, add `needs:device-check`.
 - **Never touch the live Supabase project.** No `supabase db push`, `config push`,
   `link`, or anything else that writes to the cloud. Write the migration file under
   `supabase/migrations/` and say in the PR that it needs applying; Elia applies it.

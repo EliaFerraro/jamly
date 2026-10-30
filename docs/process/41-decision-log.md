@@ -88,6 +88,7 @@ than the outcome, and because the reversal itself was the decision.
 | D43 | **Agents work through PRs only.** One issue, one branch, one PR; merge is Elia's | Delegating the code is not delegating the product. PRs target `dev`; `dev`, `staging` and `main` are protected so this holds even when an agent ignores the instruction | `CLAUDE.md`, branch protection |
 | D44 | **The definition of done names who holds each line** | A cloud session can run typecheck, lint and tests, but cannot check two platforms, offline reads or dark legibility. Saying so stops an agent from claiming what it cannot have verified, and tells Elia exactly what to try on a device | `CLAUDE.md` |
 | D45 | **Issues are written to a template** that forces acceptance criteria, out-of-scope and settled decisions | An agent builds what the issue says. The template is where scope collapse (R1) gets stopped before any code exists | `.github/ISSUE_TEMPLATE/` |
+| D46 | **Labels carry the workflow state; the GitHub Project is for planning only** | A Claude cloud session reaches issues and labels through the REST API but not GitHub Projects. Whatever an agent must read or signal — ready, working, blocked, needs a device check — has to be a label, or the agents can't see it. Labels are declared in `.github/labels.yml` so they can be recreated and reused | [42-project-board](42-project-board.md) |
 
 ---
 

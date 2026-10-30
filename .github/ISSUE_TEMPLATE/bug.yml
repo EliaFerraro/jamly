@@ -1,6 +1,6 @@
 name: Bug
 description: Something a musician hits that behaves wrongly.
-labels: [bug]
+labels: [type:bug]
 body:
   - type: textarea
     id: what
