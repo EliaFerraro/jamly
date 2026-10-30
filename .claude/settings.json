@@ -14,11 +14,7 @@
       "Bash(npx tsc --noEmit *)",
       "Bash(npx prettier *)"
     ],
-    "ask": [
-      "Edit(./.github/workflows/**)",
-      "Edit(./supabase/config.toml)",
-      "Edit(./eas.json)"
-    ],
+    "ask": ["Edit(./.github/workflows/**)", "Edit(./supabase/config.toml)", "Edit(./eas.json)"],
     "deny": [
       "Read(.env)",
       "Read(.env.*)",
