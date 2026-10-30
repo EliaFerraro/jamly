@@ -23,7 +23,7 @@
       "Bash(git push -f *)",
       "Bash(git push origin dev *)",
       "Bash(git push origin staging *)",
-      "Bash(git push origin master *)",
+      "Bash(git push origin main *)",
       "Bash(npx supabase db push *)",
       "Bash(npx supabase db reset *)",
       "Bash(npx supabase config push *)",

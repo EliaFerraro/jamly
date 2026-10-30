@@ -84,7 +84,7 @@ an issue.
 
 - **One issue, one branch, one PR.** Branch `<type>/<issue>-<slug>`, e.g.
   `feat/12-setlist-order`, cut from `dev`. Open the PR against `dev`; never merge it,
-  and never push to `dev`, `staging` or `master` (they flow dev → staging → master, and
+  and never push to `dev`, `staging` or `main` (they flow dev → staging → main, and
   promoting between them is Elia's).
 - **Never touch the live Supabase project.** No `supabase db push`, `config push`,
   `link`, or anything else that writes to the cloud. Write the migration file under
