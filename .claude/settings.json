@@ -1,5 +1,41 @@
 {
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "enabledPlugins": {
     "expo@claude-plugins-official": true
+  },
+  "permissions": {
+    "allow": [
+      "Bash(npm ci)",
+      "Bash(npm run typecheck)",
+      "Bash(npm run lint *)",
+      "Bash(npm test *)",
+      "Bash(npm run format)",
+      "Bash(npx jest *)",
+      "Bash(npx tsc --noEmit *)",
+      "Bash(npx prettier *)"
+    ],
+    "ask": ["Edit(./.github/workflows/**)", "Edit(./supabase/config.toml)", "Edit(./eas.json)"],
+    "deny": [
+      "Read(.env)",
+      "Read(.env.*)",
+      "Read(!.env.example)",
+      "Bash(git push --force *)",
+      "Bash(git push -f *)",
+      "Bash(git push origin dev *)",
+      "Bash(git push origin staging *)",
+      "Bash(git push origin main *)",
+      "Bash(npx supabase db push *)",
+      "Bash(npx supabase db reset *)",
+      "Bash(npx supabase config push *)",
+      "Bash(npx supabase link *)",
+      "Bash(supabase db push *)",
+      "Bash(supabase db reset *)",
+      "Bash(supabase config push *)",
+      "Bash(supabase link *)",
+      "Bash(eas build *)",
+      "Bash(eas submit *)",
+      "Bash(npx eas *)",
+      "Bash(rm -rf *)"
+    ]
   }
 }

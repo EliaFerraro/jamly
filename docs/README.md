@@ -58,6 +58,7 @@ Everything here is versioned in git alongside the app. If a decision changes, th
 |---|---|
 | [40 — Ways of Working](process/40-ways-of-working.md) | Solo-dev cadence, definition of done, how docs stay honest. |
 | [41 — Decision Log](process/41-decision-log.md) | Chronological log of smaller decisions that don't warrant an ADR. |
+| [42 — Project Board](process/42-project-board.md) | Labels, milestones and the GitHub Project: what needs Elia, what an agent can pick up. |
 
 ---
 

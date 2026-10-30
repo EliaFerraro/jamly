@@ -1,8 +1,8 @@
 # Jamly — project context
 
 Jamly is a mobile app (iOS, Android, tablet; web later) for musicians and bands.
-Solo, part-time project. Currently at **v0.0 — foundation**: documentation complete,
-app skeleton runs, no real features yet.
+Solo, part-time project. Currently building **v0.1 — the band loop**, Epic A
+(getting the band in): sign-in and bands (create, invite by link, join by code) exist.
 
 ## Read these before doing anything substantial
 
@@ -56,15 +56,17 @@ src/
 
 **Backend:** Supabase Cloud only — no local stack, no Docker, no WSL (D27). Tables
 arrive with the feature that needs them (D28); the original full schema sits in
-git at `88b39e7` to crib from a table at a time. So far: **`profiles`** only, in
-`supabase/migrations/`. Apply with `npx supabase link --project-ref <ref>` then
-`npx supabase db push` — never by editing the schema in the dashboard.
+git at `88b39e7` to crib from a table at a time. So far: **`profiles`** and
+**`bands`**, in `supabase/migrations/`. Elia applies them with `npx supabase link` then
+`npx supabase db push` — never by editing the schema in the dashboard, and never by an
+agent (see below).
 
-**Current state of the app:** two screens behind an auth gate. `app/(auth)/sign-in.tsx`
-is all an unauthenticated device can reach; `app/index.tsx` shows who you are and
-whether the device can reach the database. Sign-in is email + password with sign-up
-disabled — accounts are created by hand in the dashboard (ADR-0008). The tab
-skeleton was removed (D29).
+**Current state of the app:** behind an auth gate. `app/(auth)/sign-in.tsx` is all an
+unauthenticated device can reach. `app/index.tsx` is BandHome: your band and its
+roster, or create/join if you have none. `app/band/` creates a band and shares the
+invite; `app/join/[code].tsx` is the invite link's landing route. Sign-in is email +
+password with sign-up disabled — accounts are created by hand in the dashboard
+(ADR-0008).
 
 ## Commands
 
@@ -74,6 +76,43 @@ npm run typecheck   # tsc --noEmit
 npm run lint
 npm test
 ```
+
+## Working as an agent
+
+These hold whenever you work on your own, for example in a cloud session started from
+an issue.
+
+- **One issue, one branch, one PR.** Branch `<type>/<issue>-<slug>`, e.g.
+  `feat/12-setlist-order`, cut from `dev`. Open the PR against `dev`; never merge it,
+  and never push to `dev`, `staging` or `main` (they flow dev → staging → main, and
+  promoting between them is Elia's).
+- **Labels are the handshake** ([42-project-board](docs/process/42-project-board.md)).
+  Start only on issues labelled `agent:ready`; add `agent:working` when you start. If
+  you stop for any reason other than done, add `needs:elia` and comment why. When the
+  PR is green, add `needs:device-check`.
+- **Never touch the live Supabase project.** No `supabase db push`, `config push`,
+  `link`, or anything else that writes to the cloud. Write the migration file under
+  `supabase/migrations/` and say in the PR that it needs applying; Elia applies it.
+  The cloud session has no Supabase credentials, by design.
+- **No EAS builds or submissions.** Those are Elia's, from his machine.
+- **Product questions stop you.** If the issue doesn't settle a product choice (scope,
+  wording, who sees what), don't guess: ask in the PR and stop. Ideas you have along
+  the way go to `docs/product/10-feature-inventory.md`, not into the code.
+- **Expo docs:** read the v57 docs (see `AGENTS.md`). APIs changed; memory is wrong.
+
+## Definition of done
+
+Full list in [33-conventions](docs/tech/33-conventions.md#definition-of-done). Who holds
+each line:
+
+- Typecheck, lint, tests pass: `npm run typecheck && npm run lint && npm test` *(you,
+  before saying done; CI on the PR)*
+- New logic has a test where a test is meaningful *(you)*
+- Decisions written to the decision log or an ADR, contradicted docs updated in the
+  same PR *(you write them; Elia checks in review)*
+- Works on iOS **and** Android, read paths work offline, legible in the dark *(Elia, on
+  real devices — a cloud session can't check these, so don't claim them; list in the
+  PR what he should try)*
 
 ## Recording decisions
 

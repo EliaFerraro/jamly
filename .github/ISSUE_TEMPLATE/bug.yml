@@ -1,0 +1,42 @@
+name: Bug
+description: Something a musician hits that behaves wrongly.
+labels: [type:bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What should have happened
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. …
+        2. …
+    validations:
+      required: true
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      multiple: true
+      options: [iOS, Android, Tablet, Web]
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Logs, errors, screenshots
+  - type: textarea
+    id: fixed-when
+    attributes:
+      label: Fixed when
+      description: The check that proves it's fixed. It should become a regression test.
+    validations:
+      required: true
