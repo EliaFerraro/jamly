@@ -83,7 +83,9 @@ These hold whenever you work on your own, for example in a cloud session started
 an issue.
 
 - **One issue, one branch, one PR.** Branch `<type>/<issue>-<slug>`, e.g.
-  `feat/12-setlist-order`. Open a PR to `main`; never merge it and never push to `main`.
+  `feat/12-setlist-order`, cut from `dev`. Open the PR against `dev`; never merge it,
+  and never push to `dev`, `staging` or `master` (they flow dev → staging → master, and
+  promoting between them is Elia's).
 - **Never touch the live Supabase project.** No `supabase db push`, `config push`,
   `link`, or anything else that writes to the cloud. Write the migration file under
   `supabase/migrations/` and say in the PR that it needs applying; Elia applies it.
