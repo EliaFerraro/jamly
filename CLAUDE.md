@@ -85,7 +85,9 @@ an issue.
 - **One issue, one branch, one PR.** Branch `<type>/<issue>-<slug>`, e.g.
   `feat/12-setlist-order`, cut from `dev`. Open the PR against `dev`; never merge it,
   and never push to `dev`, `staging` or `main` (they flow dev → staging → main, and
-  promoting between them is Elia's).
+  promoting between them is Elia's). Always push with the branch named:
+  `git push -u origin <your-branch>`. A bare `git push`, `git push origin` or
+  `... HEAD` is denied, because it can't be told apart from a push to `dev`.
 - **Labels are the handshake** ([42-project-board](docs/process/42-project-board.md)).
   Start only on issues labelled `agent:ready`; add `agent:working` when you start. If
   you stop for any reason other than done, add `needs:elia` and comment why. When the
