@@ -1,0 +1,12 @@
+{
+  "$comment": "Views jamly adds on top of the template. Repo-specific views are allowed on top, never instead.",
+  "views": [
+    {
+      "name": "Audit inbox",
+      "layout": "TABLE_LAYOUT",
+      "filter": "is:open label:type:audit",
+      "fields": ["Title", "Priority", "Labels"],
+      "manual": "Sort by Created, newest first."
+    }
+  ]
+}
