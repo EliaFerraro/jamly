@@ -97,6 +97,11 @@ an issue.
   `supabase/migrations/` and say in the PR that it needs applying; Elia applies it.
   The cloud session has no Supabase credentials, by design.
 - **No EAS builds or submissions.** Those are Elia's, from his machine.
+- **Recover before you stop.** When something fails, read the real error, try the
+  alternatives (another tool, endpoint or source) and fix what's reversible. Add
+  `needs:elia` only for what only Elia can do, and say what you tried, the alternative
+  you prepared and your recommendation — never just "it doesn't work"
+  ([agent-kit ADR 0010](https://github.com/ferrarolabs/agent-kit/blob/main/docs/decisions/0010-agents-recover-before-they-escalate.md)).
 - **Product questions stop you.** If the issue doesn't settle a product choice (scope,
   wording, who sees what), don't guess: ask in the PR and stop. Ideas you have along
   the way go to `docs/product/10-feature-inventory.md`, not into the code.
